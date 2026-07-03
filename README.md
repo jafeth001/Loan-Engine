@@ -236,8 +236,6 @@ curl http://localhost:8080/api/v1/audits/loans/1 \
 
 ## Notes
 
-- Loan responses are cached in Redis for up to 10 minutes.
-- Prepayments evict loan cache entries so clients see updated schedules.
 - The API is designed for `ROLE_ADMIN` and `ROLE_CUSTOMER` access controls.
 #   L o a n - E n g i n e 
  
