@@ -1,0 +1,160 @@
+loan-engine-redis  | 
+loan-engine-redis  | *** FATAL CONFIG FILE ERROR (Redis 7.4.9) ***
+loan-engine-redis  | Reading the configuration file, at line 2
+loan-engine-redis  | >>> 'requirepass "--maxmemory" "256mb"'
+loan-engine-redis  | wrong number of arguments
+loan-engine-redis  | 
+loan-engine-redis  | *** FATAL CONFIG FILE ERROR (Redis 7.4.9) ***
+loan-engine-redis  | Reading the configuration file, at line 2
+loan-engine-redis  | >>> 'requirepass "--maxmemory" "256mb"'
+loan-engine-redis  | wrong number of arguments
+loan-engine-redis  | 
+loan-engine-redis  | *** FATAL CONFIG FILE ERROR (Redis 7.4.9) ***
+loan-engine-redis  | Reading the configuration file, at line 2
+loan-engine-redis  | >>> 'requirepass "--maxmemory" "256mb"'
+loan-engine-redis  | wrong number of arguments
+loan-engine-redis  | 
+loan-engine-redis  | *** FATAL CONFIG FILE ERROR (Redis 7.4.9) ***
+loan-engine-redis  | Reading the configuration file, at line 2
+loan-engine-redis  | >>> 'requirepass "--maxmemory" "256mb"'
+loan-engine-redis  | wrong number of arguments
+loan-engine-redis  | 
+loan-engine-redis  | *** FATAL CONFIG FILE ERROR (Redis 7.4.9) ***
+loan-engine-redis  | Reading the configuration file, at line 2
+loan-engine-redis  | >>> 'requirepass "--maxmemory" "256mb"'
+loan-engine-redis  | wrong number of arguments
+loan-engine-redis  | 
+loan-engine-redis  | *** FATAL CONFIG FILE ERROR (Redis 7.4.9) ***
+loan-engine-redis  | Reading the configuration file, at line 2
+loan-engine-redis  | >>> 'requirepass "--maxmemory" "256mb"'
+loan-engine-redis  | wrong number of arguments
+loan-engine-redis  | 
+loan-engine-redis  | *** FATAL CONFIG FILE ERROR (Redis 7.4.9) ***
+loan-engine-redis  | Reading the configuration file, at line 2
+loan-engine-redis  | >>> 'requirepass "--maxmemory" "256mb"'
+loan-engine-redis  | wrong number of arguments
+loan-engine-redis  | 
+loan-engine-redis  | *** FATAL CONFIG FILE ERROR (Redis 7.4.9) ***
+loan-engine-redis  | Reading the configuration file, at line 2
+loan-engine-redis  | >>> 'requirepass "--maxmemory" "256mb"'
+loan-engine-redis  | wrong number of arguments
+loan-engine-redis  | 
+loan-engine-redis  | *** FATAL CONFIG FILE ERROR (Redis 7.4.9) ***
+loan-engine-redis  | Reading the configuration file, at line 2
+loan-engine-redis  | >>> 'requirepass "--maxmemory" "256mb"'
+loan-engine-redis  | wrong number of arguments
+loan-engine-redis  | 
+loan-engine-redis  | *** FATAL CONFIG FILE ERROR (Redis 7.4.9) ***
+loan-engine-redis  | Reading the configuration file, at line 2
+loan-engine-redis  | >>> 'requirepass "--maxmemory" "256mb"'
+loan-engine-redis  | wrong number of arguments
+loan-engine-redis  | 
+loan-engine-redis  | *** FATAL CONFIG FILE ERROR (Redis 7.4.9) ***
+loan-engine-redis  | Reading the configuration file, at line 2
+loan-engine-redis  | >>> 'requirepass "--maxmemory" "256mb"'
+loan-engine-redis  | wrong number of arguments
+loan-engine-redis  | 
+loan-engine-redis  | *** FATAL CONFIG FILE ERROR (Redis 7.4.9) ***
+loan-engine-redis  | Reading the configuration file, at line 2
+loan-engine-redis  | >>> 'requirepass "--maxmemory" "256mb"'
+loan-engine-redis  | wrong number of arguments
+loan-engine-redis  | 
+loan-engine-redis  | *** FATAL CONFIG FILE ERROR (Redis 7.4.9) ***
+loan-engine-redis  | Reading the configuration file, at line 2
+loan-engine-redis  | >>> 'requirepass "--maxmemory" "256mb"'
+loan-engine-redis  | wrong number of arguments
+loan-engine-redis  | 
+loan-engine-redis  | *** FATAL CONFIG FILE ERROR (Redis 7.4.9) ***
+loan-engine-redis  | Reading the configuration file, at line 2
+loan-engine-redis  | >>> 'requirepass "--maxmemory" "256mb"'
+loan-engine-redis  | wrong number of arguments
+loan-engine-redis  | 
+loan-engine-redis  | *** FATAL CONFIG FILE ERROR (Redis 7.4.9) ***
+loan-engine-redis  | Reading the configuration file, at line 2
+loan-engine-redis  | >>> 'requirepass "--maxmemory" "256mb"'
+loan-engine-redis  | wrong number of arguments
+loan-engine-redis  | 
+loan-engine-redis  | *** FATAL CONFIG FILE ERROR (Redis 7.4.9) ***
+loan-engine-redis  | Reading the configuration file, at line 2
+loan-engine-redis  | >>> 'requirepass "--maxmemory" "256mb"'
+loan-engine-redis  | wrong number of arguments
+loan-engine-kafka  | [2026-07-02 08:48:09,878] INFO [GroupMetadataManager brokerId=1] Finished loading offsets and group metadata from __consumer_offsets-28 in 27 milliseconds for epoch 0, of which 27 milliseconds was spent in the scheduler. (kafka.coordinator.group.GroupMetadataManager)
+loan-engine-kafka  | [2026-07-02 08:48:09,879] INFO [GroupMetadataManager brokerId=1] Finished loading offsets and group metadata from __consumer_offsets-7 in 27 milliseconds for epoch 0, of which 27 milliseconds was spent in the scheduler. (kafka.coordinator.group.GroupMetadataManager)
+loan-engine-kafka  | [2026-07-02 08:48:09,879] INFO [GroupMetadataManager brokerId=1] Finished loading offsets and group metadata from __consumer_offsets-40 in 27 milliseconds for epoch 0, of which 27 milliseconds was spent in the scheduler. (kafka.coordinator.group.GroupMetadataManager)
+loan-engine-kafka  | [2026-07-02 08:48:09,879] INFO [GroupMetadataManager brokerId=1] Finished loading offsets and group metadata from __consumer_offsets-3 in 27 milliseconds for epoch 0, of which 27 milliseconds was spent in the scheduler. (kafka.coordinator.group.GroupMetadataManager)
+loan-engine-kafka  | [2026-07-02 08:48:09,880] INFO [GroupMetadataManager brokerId=1] Finished loading offsets and group metadata from __consumer_offsets-36 in 27 milliseconds for epoch 0, of which 27 milliseconds was spent in the scheduler. (kafka.coordinator.group.GroupMetadataManager)
+loan-engine-kafka  | [2026-07-02 08:48:09,880] INFO [GroupMetadataManager brokerId=1] Finished loading offsets and group metadata from __consumer_offsets-47 in 27 milliseconds for epoch 0, of which 27 milliseconds was spent in the scheduler. (kafka.coordinator.group.GroupMetadataManager)
+loan-engine-kafka  | [2026-07-02 08:48:09,880] INFO [GroupMetadataManager brokerId=1] Finished loading offsets and group metadata from __consumer_offsets-14 in 27 milliseconds for epoch 0, of which 27 milliseconds was spent in the scheduler. (kafka.coordinator.group.GroupMetadataManager)
+loan-engine-kafka  | [2026-07-02 08:48:09,881] INFO [GroupMetadataManager brokerId=1] Finished loading offsets and group metadata from __consumer_offsets-43 in 27 milliseconds for epoch 0, of which 27 milliseconds was spent in the scheduler. (kafka.coordinator.group.GroupMetadataManager)
+loan-engine-kafka  | [2026-07-02 08:48:09,881] INFO [GroupMetadataManager brokerId=1] Finished loading offsets and group metadata from __consumer_offsets-10 in 26 milliseconds for epoch 0, of which 26 milliseconds was spent in the scheduler. (kafka.coordinator.group.GroupMetadataManager)
+loan-engine-kafka  | [2026-07-02 08:48:09,881] INFO [GroupMetadataManager brokerId=1] Finished loading offsets and group metadata from __consumer_offsets-22 in 26 milliseconds for epoch 0, of which 26 milliseconds was spent in the scheduler. (kafka.coordinator.group.GroupMetadataManager)
+loan-engine-kafka  | [2026-07-02 08:48:09,882] INFO [GroupMetadataManager brokerId=1] Finished loading offsets and group metadata from __consumer_offsets-18 in 27 milliseconds for epoch 0, of which 27 milliseconds was spent in the scheduler. (kafka.coordinator.group.GroupMetadataManager)
+loan-engine-kafka  | [2026-07-02 08:48:09,882] INFO [GroupMetadataManager brokerId=1] Finished loading offsets and group metadata from __consumer_offsets-31 in 26 milliseconds for epoch 0, of which 26 milliseconds was spent in the scheduler. (kafka.coordinator.group.GroupMetadataManager)
+loan-engine-kafka  | [2026-07-02 08:48:09,883] INFO [GroupMetadataManager brokerId=1] Finished loading offsets and group metadata from __consumer_offsets-27 in 27 milliseconds for epoch 0, of which 27 milliseconds was spent in the scheduler. (kafka.coordinator.group.GroupMetadataManager)
+loan-engine-kafka  | [2026-07-02 08:48:09,884] INFO [GroupMetadataManager brokerId=1] Finished loading offsets and group metadata from __consumer_offsets-39 in 28 milliseconds for epoch 0, of which 27 milliseconds was spent in the scheduler. (kafka.coordinator.group.GroupMetadataManager)
+loan-engine-kafka  | [2026-07-02 08:48:09,884] INFO [GroupMetadataManager brokerId=1] Finished loading offsets and group metadata from __consumer_offsets-6 in 27 milliseconds for epoch 0, of which 27 milliseconds was spent in the scheduler. (kafka.coordinator.group.GroupMetadataManager)
+loan-engine-kafka  | [2026-07-02 08:48:09,885] INFO [GroupMetadataManager brokerId=1] Finished loading offsets and group metadata from __consumer_offsets-35 in 28 milliseconds for epoch 0, of which 28 milliseconds was spent in the scheduler. (kafka.coordinator.group.GroupMetadataManager)
+loan-engine-kafka  | [2026-07-02 08:48:09,885] INFO [GroupMetadataManager brokerId=1] Finished loading offsets and group metadata from __consumer_offsets-2 in 28 milliseconds for epoch 0, of which 28 milliseconds was spent in the scheduler. (kafka.coordinator.group.GroupMetadataManager)
+loan-engine-kafka  | [2026-07-02 08:48:09,899] INFO [ReplicaFetcherManager on broker 1] Removed fetcher for partitions Set(loan.created-0) (kafka.server.ReplicaFetcherManager)
+loan-engine-kafka  | [2026-07-02 08:48:09,905] INFO [LogLoader partition=loan.created-0, dir=/tmp/kafka-logs] Loading producer state till offset 0 with message format version 2 (kafka.log.UnifiedLog$)
+loan-engine-kafka  | [2026-07-02 08:48:09,909] INFO Created log for partition loan.created-0 in /tmp/kafka-logs/loan.created-0 with properties {} (kafka.log.LogManager)
+loan-engine-kafka  | [2026-07-02 08:48:09,911] INFO [Partition loan.created-0 broker=1] No checkpointed highwatermark is found for partition loan.created-0 (kafka.cluster.Partition)
+loan-engine-kafka  | [2026-07-02 08:48:09,912] INFO [Partition loan.created-0 broker=1] Log loaded for partition loan.created-0 with initial high watermark 0 (kafka.cluster.Partition)
+loan-engine-kafka  | [2026-07-02 08:51:30,525] WARN [SocketServer listenerType=BROKER, nodeId=1] Unexpected error from /192.168.65.1 (channelId=172.18.0.2:9094-192.168.65.1:53234-0); closing connection (org.apache.kafka.common.network.Selector)
+loan-engine-kafka  | org.apache.kafka.common.network.InvalidReceiveException: Invalid receive (size = 1195725856 larger than 104857600)
+loan-engine-kafka  | 	at org.apache.kafka.common.network.NetworkReceive.readFrom(NetworkReceive.java:94)
+loan-engine-kafka  | 	at org.apache.kafka.common.network.KafkaChannel.receive(KafkaChannel.java:452)
+loan-engine-kafka  | 	at org.apache.kafka.common.network.KafkaChannel.read(KafkaChannel.java:402)
+loan-engine-kafka  | 	at org.apache.kafka.common.network.Selector.attemptRead(Selector.java:674)
+loan-engine-kafka  | 	at org.apache.kafka.common.network.Selector.pollSelectionKeys(Selector.java:576)
+loan-engine-kafka  | 	at org.apache.kafka.common.network.Selector.poll(Selector.java:481)
+loan-engine-kafka  | 	at kafka.network.Processor.poll(SocketServer.scala:1107)
+loan-engine-kafka  | 	at kafka.network.Processor.run(SocketServer.scala:1011)
+loan-engine-kafka  | 	at java.base/java.lang.Thread.run(Unknown Source)
+loan-engine-kafka  | [2026-07-02 08:51:31,885] WARN [SocketServer listenerType=BROKER, nodeId=1] Unexpected error from /192.168.65.1 (channelId=172.18.0.2:9094-192.168.65.1:36921-0); closing connection (org.apache.kafka.common.network.Selector)
+loan-engine-kafka  | org.apache.kafka.common.network.InvalidReceiveException: Invalid receive (size = 1195725856 larger than 104857600)
+loan-engine-kafka  | 	at org.apache.kafka.common.network.NetworkReceive.readFrom(NetworkReceive.java:94)
+loan-engine-kafka  | 	at org.apache.kafka.common.network.KafkaChannel.receive(KafkaChannel.java:452)
+loan-engine-kafka  | 	at org.apache.kafka.common.network.KafkaChannel.read(KafkaChannel.java:402)
+loan-engine-kafka  | 	at org.apache.kafka.common.network.Selector.attemptRead(Selector.java:674)
+loan-engine-kafka  | 	at org.apache.kafka.common.network.Selector.pollSelectionKeys(Selector.java:576)
+loan-engine-kafka  | 	at org.apache.kafka.common.network.Selector.poll(Selector.java:481)
+loan-engine-kafka  | 	at kafka.network.Processor.poll(SocketServer.scala:1107)
+loan-engine-kafka  | 	at kafka.network.Processor.run(SocketServer.scala:1011)
+loan-engine-kafka  | 	at java.base/java.lang.Thread.run(Unknown Source)
+loan-engine-kafka  | [2026-07-02 08:51:31,894] WARN [SocketServer listenerType=BROKER, nodeId=1] Unexpected error from /192.168.65.1 (channelId=172.18.0.2:9094-192.168.65.1:43390-0); closing connection (org.apache.kafka.common.network.Selector)
+loan-engine-kafka  | org.apache.kafka.common.network.InvalidReceiveException: Invalid receive (size = 1195725856 larger than 104857600)
+loan-engine-kafka  | 	at org.apache.kafka.common.network.NetworkReceive.readFrom(NetworkReceive.java:94)
+loan-engine-kafka  | 	at org.apache.kafka.common.network.KafkaChannel.receive(KafkaChannel.java:452)
+loan-engine-kafka  | 	at org.apache.kafka.common.network.KafkaChannel.read(KafkaChannel.java:402)
+loan-engine-kafka  | 	at org.apache.kafka.common.network.Selector.attemptRead(Selector.java:674)
+loan-engine-kafka  | 	at org.apache.kafka.common.network.Selector.pollSelectionKeys(Selector.java:576)
+loan-engine-kafka  | 	at org.apache.kafka.common.network.Selector.poll(Selector.java:481)
+loan-engine-kafka  | 	at kafka.network.Processor.poll(SocketServer.scala:1107)
+loan-engine-kafka  | 	at kafka.network.Processor.run(SocketServer.scala:1011)
+loan-engine-kafka  | 	at java.base/java.lang.Thread.run(Unknown Source)
+loan-engine-kafka  | [2026-07-02 08:51:31,905] WARN [SocketServer listenerType=BROKER, nodeId=1] Unexpected error from /192.168.65.1 (channelId=172.18.0.2:9094-192.168.65.1:25179-1); closing connection (org.apache.kafka.common.network.Selector)
+loan-engine-kafka  | org.apache.kafka.common.network.InvalidReceiveException: Invalid receive (size = 1195725856 larger than 104857600)
+loan-engine-kafka  | 	at org.apache.kafka.common.network.NetworkReceive.readFrom(NetworkReceive.java:94)
+loan-engine-kafka  | 	at org.apache.kafka.common.network.KafkaChannel.receive(KafkaChannel.java:452)
+loan-engine-kafka  | 	at org.apache.kafka.common.network.KafkaChannel.read(KafkaChannel.java:402)
+loan-engine-kafka  | 	at org.apache.kafka.common.network.Selector.attemptRead(Selector.java:674)
+loan-engine-kafka  | 	at org.apache.kafka.common.network.Selector.pollSelectionKeys(Selector.java:576)
+loan-engine-kafka  | 	at org.apache.kafka.common.network.Selector.poll(Selector.java:481)
+loan-engine-kafka  | 	at kafka.network.Processor.poll(SocketServer.scala:1107)
+loan-engine-kafka  | 	at kafka.network.Processor.run(SocketServer.scala:1011)
+loan-engine-kafka  | 	at java.base/java.lang.Thread.run(Unknown Source)
+loan-engine-kafka  | [2026-07-02 08:51:51,749] WARN [SocketServer listenerType=BROKER, nodeId=1] Unexpected error from /192.168.65.1 (channelId=172.18.0.2:9094-192.168.65.1:48934-1); closing connection (org.apache.kafka.common.network.Selector)
+loan-engine-kafka  | org.apache.kafka.common.network.InvalidReceiveException: Invalid receive (size = 1195725856 larger than 104857600)
+loan-engine-kafka  | 	at org.apache.kafka.common.network.NetworkReceive.readFrom(NetworkReceive.java:94)
+loan-engine-kafka  | 	at org.apache.kafka.common.network.KafkaChannel.receive(KafkaChannel.java:452)
+loan-engine-kafka  | 	at org.apache.kafka.common.network.KafkaChannel.read(KafkaChannel.java:402)
+loan-engine-kafka  | 	at org.apache.kafka.common.network.Selector.attemptRead(Selector.java:674)
+loan-engine-kafka  | 	at org.apache.kafka.common.network.Selector.pollSelectionKeys(Selector.java:576)
+loan-engine-kafka  | 	at org.apache.kafka.common.network.Selector.poll(Selector.java:481)
+loan-engine-kafka  | 	at kafka.network.Processor.poll(SocketServer.scala:1107)
+loan-engine-kafka  | 	at kafka.network.Processor.run(SocketServer.scala:1011)
+loan-engine-kafka  | 	at java.base/java.lang.Thread.run(Unknown Source)
+loan-engine-kafka  | [2026-07-02 08:57:17,379] INFO [SnapshotGenerator id=1] Creating new KRaft snapshot file snapshot 00000000000000007251-0000000001 because we have waited at least 60 minute(s). (org.apache.kafka.image.publisher.SnapshotGenerator)
+loan-engine-kafka  | [2026-07-02 08:57:17,864] INFO [SnapshotEmitter id=1] Successfully wrote snapshot 00000000000000007251-0000000001 (org.apache.kafka.image.publisher.SnapshotEmitter)
+loan-engine-kafka  | [2026-07-02 08:58:01,446] INFO [NodeToControllerChannelManager id=1 name=forwarding] Node 1 disconnected. (org.apache.kafka.clients.NetworkClient)

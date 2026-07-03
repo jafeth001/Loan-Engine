@@ -1,0 +1,181 @@
+# =============================================================================
+# Loan Engine — application configuration
+# =============================================================================
+
+spring:
+  application:
+    name: loan-engine
+
+  profiles:
+    active: mysql
+
+# =============================================================================
+# Shared configuration
+# =============================================================================
+app:
+  jwt:
+    secret: ${JWT_SECRET:bG9hbi1lbmdpbmUtc3VwZXItc2VjcmV0LWtleS1mb3ItaG1hYy1zaGEyNTYtbXVzdC1iZS1hdC1sZWFzdC0zMi1ieXRlcw==}
+    expiration-ms: ${JWT_EXPIRATION_MS:3600000}
+
+  kafka:
+    topic:
+      loan-created:
+        partitions: 3
+        replicas: 1
+      prepayment-applied:
+        partitions: 3
+        replicas: 1
+
+  cache:
+    loans:
+      ttl-minutes: 10
+
+server:
+  port: 8080
+
+# =============================================================================
+# MYSQL PROFILE
+# =============================================================================
+---
+spring:
+  config:
+    activate:
+      on-profile: mysql
+
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/loan_engine?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:root}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      connection-timeout: 30000
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:schema.sql
+
+  # ---------------------------------------------------------------------------
+  # Redis
+  # ---------------------------------------------------------------------------
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      timeout: 2s
+
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 4
+          min-idle: 1
+
+  cache:
+    type: redis
+
+  # ---------------------------------------------------------------------------
+  # Kafka
+  #
+  # Local Spring Boot -> Docker Kafka
+  # ---------------------------------------------------------------------------
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9094}
+
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      acks: all
+      retries: 3
+
+      properties:
+        enable.idempotence: true
+        max.in.flight.requests.per.connection: 1
+
+    consumer:
+      group-id: loan-engine-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+
+      properties:
+        spring.json.trusted.packages: "com.bank.loanengine.messaging.event"
+        spring.json.use.type.headers: true
+
+# =============================================================================
+# H2 PROFILE
+# =============================================================================
+---
+spring:
+  config:
+    activate:
+      on-profile: h2
+
+  datasource:
+    url: jdbc:h2:mem:loan_engine;MODE=MySQL;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ""
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:schema-h2.sql
+
+  h2:
+    console:
+      enabled: true
+
+  cache:
+    type: none
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+  kafka:
+    bootstrap-servers: localhost:9094
+
+    consumer:
+      group-id: loan-engine-test-group
+
+# =============================================================================
+# Swagger
+# =============================================================================
+springdoc:
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+    default-models-expand-depth: 2
+    default-expand-depth: 2
+    try-it-out-enabled: false
+    persist-authorization: true
+    filter: true
+
+  show-actuator: false
+  remove-broken-reference-definitions: true

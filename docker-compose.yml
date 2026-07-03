@@ -1,0 +1,154 @@
+# =============================================================================
+# Loan Engine — Docker Compose
+# =============================================================================
+
+services:
+
+  # ─────────────────────────── MySQL ───────────────────────────
+  mysql:
+    image: mysql:8.0
+    container_name: loan-engine-mysql
+    restart: unless-stopped
+
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-root}
+      MYSQL_DATABASE: loan_engine
+      MYSQL_USER: ${DB_USERNAME:-loanapp}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-loanapp123}
+
+    ports:
+      - "3306:3306"
+
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./src/main/resources/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+
+    networks:
+      - loan-net
+
+  # ─────────────────────────── Redis ───────────────────────────
+  redis:
+    image: redis:7.4-alpine
+    container_name: loan-engine-redis
+    restart: unless-stopped
+
+    command: >
+      sh -c '
+        if [ -n "${REDIS_PASSWORD:-}" ]; then
+          exec redis-server --requirepass "${REDIS_PASSWORD}"
+        else
+          exec redis-server
+        fi
+      '
+
+    ports:
+      - "6379:6379"
+
+    volumes:
+      - redis_data:/data
+
+    networks:
+      - loan-net
+
+  # ─────────────────────────── Kafka ───────────────────────────
+  kafka:
+    image: apache/kafka:3.7.0
+    container_name: loan-engine-kafka
+    restart: unless-stopped
+
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_CLUSTER_ID: MkU3OEVBNTcwNTJENDM2Qk
+
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
+
+      KAFKA_LISTENERS: INTERNAL://:9092,CONTROLLER://:9093,EXTERNAL://:9094
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka:9092,EXTERNAL://localhost:9094
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT
+
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 1
+      KAFKA_MIN_INSYNC_REPLICAS: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+
+    ports:
+      - "9092:9092"
+      - "9094:9094"
+
+    volumes:
+      - kafka_data:/var/lib/kafka/data
+
+    networks:
+      - loan-net
+
+  # ───────────────────────── Kafka UI ──────────────────────────
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: loan-engine-kafka-ui
+    restart: unless-stopped
+
+    depends_on:
+      - kafka
+
+    environment:
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
+
+    ports:
+      - "8090:8080"
+
+    networks:
+      - loan-net
+
+  # ─────────────────────── Spring Boot App ─────────────────────
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    container_name: loan-engine-app
+    restart: unless-stopped
+
+    depends_on:
+      - mysql
+      - redis
+      - kafka
+
+    environment:
+      SPRING_PROFILES_ACTIVE: mysql
+
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_USERNAME: ${DB_USERNAME:-loanapp}
+      DB_PASSWORD: ${DB_PASSWORD:-loanapp123}
+
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD:-}
+
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+
+      JWT_SECRET: ${JWT_SECRET:-bG9hbi1lbmdpbmUtc3VwZXItc2VjcmV0LWtleS1mb3ItaG1hYy1zaGEyNTYtbXVzdC1iZS1hdC1sZWFzdC0zMi1ieXRlcw==}
+      JWT_EXPIRATION_MS: ${JWT_EXPIRATION_MS:-3600000}
+
+    ports:
+      - "8080:8080"
+
+    networks:
+      - loan-net
+
+volumes:
+  mysql_data:
+  redis_data:
+  kafka_data:
+
+networks:
+  loan-net:
+    driver: bridge
