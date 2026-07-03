@@ -3,8 +3,6 @@ package com.bank.loanengine.audit.controller;
 import com.bank.loanengine.audit.dto.AuditLogResponse;
 import com.bank.loanengine.audit.service.AuditLogService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Page;
@@ -26,10 +24,7 @@ public class AuditController {
         this.auditLogService = auditLogService;
     }
 
-    @Operation(summary = "List all audit entries (ADMIN only)")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Page of audit entries returned")
-    })
+    @Operation(summary = "List audit entries (ADMIN only)")
     @GetMapping
     public ResponseEntity<Page<AuditLogResponse>> listAll(
             @RequestParam(defaultValue = "0") int page,
@@ -40,10 +35,7 @@ public class AuditController {
         return ResponseEntity.ok(result);
     }
 
-    @Operation(summary = "Get all audit entries for a loan (ADMIN only)")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Audit entries returned")
-    })
+    @Operation(summary = "List audit entries for a loan (ADMIN only)")
     @GetMapping("/loans/{loanId}")
     public ResponseEntity<Page<AuditLogResponse>> getByLoan(
             @PathVariable Long loanId,
