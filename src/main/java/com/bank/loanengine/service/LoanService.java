@@ -1,19 +1,18 @@
 package com.bank.loanengine.service;
 
-import com.bank.loanengine.config.RedisConfig;
 import com.bank.loanengine.domain.InstallmentStatus;
 import com.bank.loanengine.domain.Loan;
 import com.bank.loanengine.domain.LoanScheduleInstallment;
 import com.bank.loanengine.domain.LoanStatus;
 import com.bank.loanengine.dto.CreateLoanRequest;
+import com.bank.loanengine.dto.LoanResponse;
 import com.bank.loanengine.exception.LoanNotFoundException;
 import com.bank.loanengine.messaging.event.LoanCreatedEvent;
 import com.bank.loanengine.messaging.producer.LoanEventProducer;
 import com.bank.loanengine.repository.LoanRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.Caching;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +24,8 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class LoanService {
+
+    private static final Logger log = LoggerFactory.getLogger(LoanService.class);
 
     private final LoanRepository     loanRepository;
     private final ScheduleGenerator  scheduleGenerator;
@@ -69,29 +70,32 @@ public class LoanService {
         return saved;
     }
 
-    // ── Read (cached) ─────────────────────────────────────────────────────────────────────────
+    // ── Read ─────────────────────────────────────────────────────────────────────────────
 
-        @Cacheable(value = RedisConfig.CACHE_LOANS, key = "#loanId")
-        @Transactional(readOnly = true)
-        public com.bank.loanengine.dto.LoanResponse getLoan(Long loanId) {
-                Loan loan = loanRepository.findWithScheduleById(loanId)
-                                .orElseThrow(() -> new LoanNotFoundException(loanId));
-                return com.bank.loanengine.dto.LoanResponse.from(loan);
-        }
+    @Transactional(readOnly = true)
+    public LoanResponse getLoan(Long loanId) {
 
-    // ── Mark paid-up-to (evicts cache) ───────────────────────────────────────────────────────
+        log.info(">>> ENTERED getLoan()");
 
-    @Caching(evict = {
-            @CacheEvict(value = RedisConfig.CACHE_LOANS,          key = "#loanId"),
-            @CacheEvict(value = RedisConfig.CACHE_LOAN_SCHEDULES, key = "#loanId")
-    })
+        Loan loan = loanRepository.findWithScheduleById(loanId)
+                .orElseThrow(() -> new LoanNotFoundException(loanId));
+
+        LoanResponse response = LoanResponse.from(loan);
+
+        log.info(">>> Returning {}", response.getClass());
+
+        return response;
+    }
+
     @Transactional
     public void markPaidUpTo(Long loanId, int installmentNumber) {
+        log.info("Marking loan {} installments 1..{} as PAID and evicting cache", loanId, installmentNumber);
         Loan loan = loanRepository.findWithScheduleById(loanId)
                 .orElseThrow(() -> new LoanNotFoundException(loanId));
         loan.getSchedule().stream()
                 .filter(i -> i.getInstallmentNumber() <= installmentNumber)
                 .forEach(i -> i.setStatus(InstallmentStatus.PAID));
         loanRepository.save(loan);
+        log.debug("Loan {} marked paid up to {} and saved", loanId, installmentNumber);
     }
 }

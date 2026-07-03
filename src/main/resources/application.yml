@@ -1,7 +1,3 @@
-# =============================================================================
-# Loan Engine — application configuration
-# =============================================================================
-
 spring:
   application:
     name: loan-engine
@@ -25,10 +21,6 @@ app:
       prepayment-applied:
         partitions: 3
         replicas: 1
-
-  cache:
-    loans:
-      ttl-minutes: 10
 
 server:
   port: 8080
@@ -68,26 +60,6 @@ spring:
       mode: always
       schema-locations: classpath:schema.sql
 
-  # ---------------------------------------------------------------------------
-  # Redis
-  # ---------------------------------------------------------------------------
-  data:
-    redis:
-      host: ${REDIS_HOST:localhost}
-      port: ${REDIS_PORT:6379}
-      password: ${REDIS_PASSWORD:}
-      timeout: 2s
-
-      lettuce:
-        pool:
-          max-active: 8
-          max-idle: 4
-          min-idle: 1
-
-  cache:
-    type: redis
-
-  # ---------------------------------------------------------------------------
   # Kafka
   #
   # Local Spring Boot -> Docker Kafka
@@ -145,14 +117,6 @@ spring:
     console:
       enabled: true
 
-  cache:
-    type: none
-
-  data:
-    redis:
-      host: localhost
-      port: 6379
-
   kafka:
     bootstrap-servers: localhost:9094
 
@@ -179,3 +143,8 @@ springdoc:
 
   show-actuator: false
   remove-broken-reference-definitions: true
+
+logging:
+  level:
+    org.springframework.cache: TRACE
+    org.springframework.data.redis: TRACE

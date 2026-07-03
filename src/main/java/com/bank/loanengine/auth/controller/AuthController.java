@@ -1,6 +1,6 @@
 package com.bank.loanengine.auth.controller;
 
-import com.bank.loanengine.auth.dto.AuthService;
+import com.bank.loanengine.auth.service.AuthService;
 import com.bank.loanengine.auth.dto.AuthResponse;
 import com.bank.loanengine.auth.dto.LoginRequest;
 import com.bank.loanengine.auth.dto.RegisterRequest;

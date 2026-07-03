@@ -1,6 +1,5 @@
 package com.bank.loanengine.service;
 
-import com.bank.loanengine.config.RedisConfig;
 import com.bank.loanengine.domain.*;
 import com.bank.loanengine.dto.LoanResponse;
 import com.bank.loanengine.dto.PrepaymentRequest;
@@ -16,8 +15,8 @@ import com.bank.loanengine.service.strategy.PrepaymentResult;
 import com.bank.loanengine.service.strategy.PrepaymentStrategy;
 import com.bank.loanengine.service.strategy.PrepaymentStrategyFactory;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Caching;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,23 +29,23 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class PrepaymentService {
 
+    private static final Logger log = LoggerFactory.getLogger(PrepaymentService.class);
+
     private final LoanRepository           loanRepository;
     private final PrepaymentStrategyFactory strategyFactory;
     private final LoanEventProducer         eventProducer;
 
     /**
-     * Processes a partial prepayment, evicts the loan from Redis cache, persists the updated
      * schedule, logs an immutable transaction record, and publishes a Kafka event. The entire
      * DB operation is wrapped in a single transaction so partial failures roll back cleanly.
      */
-    @Caching(evict = {
-            @CacheEvict(value = RedisConfig.CACHE_LOANS,          key = "#loanId"),
-            @CacheEvict(value = RedisConfig.CACHE_LOAN_SCHEDULES, key = "#loanId")
-    })
     @Transactional
     public PrepaymentResponse processPrepayment(Long loanId, PrepaymentRequest request) {
+        log.info("Processing prepayment for loan {}: installment={}, amount={}, option={}",
+                loanId, request.installmentNumber(), request.amount(), request.option());
         Loan loan = loanRepository.findWithScheduleById(loanId)
                 .orElseThrow(() -> new LoanNotFoundException(loanId));
+        log.debug("Fetched loan {} with schedule size={}", loanId, loan.getSchedule() == null ? 0 : loan.getSchedule().size());
 
         LoanScheduleInstallment trigger = loan.getSchedule().stream()
                 .filter(i -> i.getInstallmentNumber().equals(request.installmentNumber()))

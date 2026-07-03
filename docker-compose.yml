@@ -1,7 +1,3 @@
-# =============================================================================
-# Loan Engine — Docker Compose
-# =============================================================================
-
 services:
 
   # ─────────────────────────── MySQL ───────────────────────────
@@ -25,31 +21,7 @@ services:
 
     networks:
       - loan-net
-
-  # ─────────────────────────── Redis ───────────────────────────
-  redis:
-    image: redis:7.4-alpine
-    container_name: loan-engine-redis
-    restart: unless-stopped
-
-    command: >
-      sh -c '
-        if [ -n "${REDIS_PASSWORD:-}" ]; then
-          exec redis-server --requirepass "${REDIS_PASSWORD}"
-        else
-          exec redis-server
-        fi
-      '
-
-    ports:
-      - "6379:6379"
-
-    volumes:
-      - redis_data:/data
-
-    networks:
-      - loan-net
-
+      -
   # ─────────────────────────── Kafka ───────────────────────────
   kafka:
     image: apache/kafka:3.7.0
@@ -118,7 +90,6 @@ services:
 
     depends_on:
       - mysql
-      - redis
       - kafka
 
     environment:
@@ -128,10 +99,6 @@ services:
       DB_PORT: 3306
       DB_USERNAME: ${DB_USERNAME:-loanapp}
       DB_PASSWORD: ${DB_PASSWORD:-loanapp123}
-
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
-      REDIS_PASSWORD: ${REDIS_PASSWORD:-}
 
       KAFKA_BOOTSTRAP_SERVERS: kafka:9092
 
@@ -146,7 +113,6 @@ services:
 
 volumes:
   mysql_data:
-  redis_data:
   kafka_data:
 
 networks:

@@ -30,14 +30,6 @@ public class AuditLogService {
 
     // ── Write side ───────────────────────────────────────────────────────────
 
-    /**
-     * Persists a successful audit entry. Uses {@code REQUIRES_NEW} so the audit write
-     * always commits independently — if the caller's outer transaction rolls back, the
-     * audit record is still preserved (we always want a trace of what the consumer saw).
-     *
-     * <p>Idempotency: if a record with the same {@code eventId} already exists (e.g. Kafka
-     * re-delivered the message after a consumer restart) the duplicate is silently skipped.
-     */
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public AuditLog recordSuccess(
             String eventId,

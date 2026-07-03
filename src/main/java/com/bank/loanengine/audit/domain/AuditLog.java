@@ -25,7 +25,7 @@ import java.time.LocalDateTime;
         }
 )
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)  // JPA only; use builder externally
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
 public class AuditLog {
@@ -65,8 +65,6 @@ public class AuditLog {
 
     /**
      * Wall-clock time at which the consumer processed the message.
-     * Distinct from the event's own {@code occurredAt} timestamp so we can measure
-     * consumer lag when needed.
      */
     @CreationTimestamp
     @Column(name = "processed_at", nullable = false, updatable = false)

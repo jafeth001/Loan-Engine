@@ -1,7 +1,10 @@
-package com.bank.loanengine.auth.dto;
+package com.bank.loanengine.auth.service;
 
 import com.bank.loanengine.auth.domain.AppUser;
 import com.bank.loanengine.auth.domain.AppUserRepository;
+import com.bank.loanengine.auth.dto.AuthResponse;
+import com.bank.loanengine.auth.dto.LoginRequest;
+import com.bank.loanengine.auth.dto.RegisterRequest;
 import com.bank.loanengine.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
