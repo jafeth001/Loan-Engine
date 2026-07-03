@@ -21,7 +21,7 @@ services:
 
     networks:
       - loan-net
-      -
+
   # ─────────────────────────── Kafka ───────────────────────────
   kafka:
     image: apache/kafka:3.7.0

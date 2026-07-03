@@ -10,4 +10,7 @@ public interface LoanRepository extends JpaRepository<Loan, Long> {
 
     @EntityGraph(attributePaths = {"schedule"})
     Optional<Loan> findWithScheduleById(Long id);
+
+    @Override
+    void flush();
 }

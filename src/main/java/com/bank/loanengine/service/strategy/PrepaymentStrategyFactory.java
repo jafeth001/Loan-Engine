@@ -8,16 +8,11 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-/**
- * Resolves the {@link PrepaymentStrategy} bean that implements a given {@link BusinessOption}.
- * Spring auto-wires every {@code PrepaymentStrategy} bean present on the classpath into the
- * list below, so adding a new option in future only requires creating a new
- * {@code @Component} class - this factory and the calling service never need to change.
- */
 @Component
 public class PrepaymentStrategyFactory {
 
     private final Map<BusinessOption, PrepaymentStrategy> strategiesByOption;
+
 
     public PrepaymentStrategyFactory(List<PrepaymentStrategy> strategies) {
         this.strategiesByOption = strategies.stream()

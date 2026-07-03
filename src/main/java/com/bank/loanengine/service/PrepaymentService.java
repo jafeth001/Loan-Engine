@@ -31,9 +31,9 @@ public class PrepaymentService {
 
     private static final Logger log = LoggerFactory.getLogger(PrepaymentService.class);
 
-    private final LoanRepository           loanRepository;
+    private final LoanRepository loanRepository;
     private final PrepaymentStrategyFactory strategyFactory;
-    private final LoanEventProducer         eventProducer;
+    private final LoanEventProducer eventProducer;
 
     /**
      * schedule, logs an immutable transaction record, and publishes a Kafka event. The entire
@@ -60,9 +60,25 @@ public class PrepaymentService {
                 loan, trigger, request.amount(), outstandingBefore);
 
         PrepaymentStrategy strategy = strategyFactory.resolve(request.option());
-        PrepaymentResult   result   = strategy.apply(context);
+        PrepaymentResult result = strategy.apply(context);
 
-        // Immutable transaction log entry
+        loan.setEmiAmount(result.newEmiAmount());
+
+        if (request.option() == BusinessOption.REDUCE_TENOR_KEEP_EMI) {
+            loan.setTenorMonths(
+                    trigger.getInstallmentNumber() +
+                            result.newRemainingTenorMonths()
+            );
+        }
+
+        // Force Hibernate to execute DELETEs first
+        loanRepository.flush();
+
+        // Refresh the loan so Hibernate is no longer holding references
+        Loan managedLoan = loanRepository.findWithScheduleById(loan.getId())
+                .orElseThrow(() -> new LoanNotFoundException(loanId));
+
+        // Transaction log
         LoanTransaction tx = LoanTransaction.builder()
                 .transactionType(TransactionType.PREPAYMENT)
                 .businessOption(request.option())
@@ -72,9 +88,10 @@ public class PrepaymentService {
                 .balanceAfter(result.outstandingPrincipalAfter())
                 .notes(result.message())
                 .build();
-        loan.addTransaction(tx);
 
-        Loan saved = loanRepository.save(loan);
+        managedLoan.addTransaction(tx);
+
+        Loan saved = loanRepository.save(managedLoan);
 
         // Kafka event (published after successful DB commit via @Transactional boundary)
         eventProducer.publishPrepaymentApplied(new PrepaymentAppliedEvent(

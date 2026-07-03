@@ -16,8 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Tag(
         name = "Loans",
-        description = "Create loans, retrieve loan details and amortisation schedules, "
-                + "and simulate prior payments before applying a prepayment event."
+        description = "Create loans, retrieve loan details and amortisation schedules, and mark installments as paid."
 )
 @SecurityRequirement(name = "bearerAuth")
 @RestController
@@ -27,51 +26,66 @@ public class LoanController {
 
     private final LoanService loanService;
 
-
-    // ── Create ────────────────────────────────────────────────────────────────
+    // ───────────────────────────────────────────────────────────────
+    // Create Loan
+    // ───────────────────────────────────────────────────────────────
 
     @Operation(summary = "Create a loan (ADMIN only)")
     @PostMapping
-    public ResponseEntity<LoanResponse> createLoan(@Valid @RequestBody CreateLoanRequest request) {
+    public ResponseEntity<LoanResponse> createLoan(
+            @Valid @RequestBody CreateLoanRequest request) {
+
         Loan loan = loanService.createLoan(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(LoanResponse.from(loan));
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(LoanResponse.from(loan));
     }
 
-    // ── Get loan ──────────────────────────────────────────────────────────────
+    // ───────────────────────────────────────────────────────────────
+    // Get Loan
+    // ───────────────────────────────────────────────────────────────
 
     @Operation(summary = "Get a loan with its schedule")
-        @GetMapping("/{loanId}")
-        public ResponseEntity<LoanResponse> getLoan(
-            @Parameter(description = "Loan ID", example = "1", required = true)
-            @PathVariable Long loanId
-    ) {
-                return ResponseEntity.ok(loanService.getLoan(loanId));
+    @GetMapping("/{loanId}")
+    public ResponseEntity<LoanResponse> getLoan(
+            @Parameter(description = "Loan ID", example = "1")
+            @PathVariable Long loanId) {
+
+        return ResponseEntity.ok(loanService.getLoan(loanId));
     }
 
-    // ── Get schedule ──────────────────────────────────────────────────────────
+    // ───────────────────────────────────────────────────────────────
+    // Get Schedule
+    // ───────────────────────────────────────────────────────────────
 
-    @Operation(summary = "Get a loan schedule")
+    @Operation(summary = "Get loan amortisation schedule")
     @GetMapping("/{loanId}/schedule")
     public ResponseEntity<LoanResponse> getSchedule(
-            @Parameter(description = "Loan ID", example = "1", required = true)
-            @PathVariable Long loanId
-    ) {
-                return ResponseEntity.ok(loanService.getLoan(loanId));
+            @Parameter(description = "Loan ID", example = "1")
+            @PathVariable Long loanId) {
+
+        return ResponseEntity.ok(loanService.getLoan(loanId));
     }
 
-    // ── Mark paid up to ───────────────────────────────────────────────────────
+    // ───────────────────────────────────────────────────────────────
+    // Mark Paid
+    // ───────────────────────────────────────────────────────────────
 
-    @Operation(summary = "Mark installments paid up to N (ADMIN only)")
-
+    @Operation(summary = "Mark installments as PAID up to a given installment")
     @PostMapping("/{loanId}/mark-paid-up-to/{installmentNumber}")
     public ResponseEntity<LoanResponse> markPaidUpTo(
-            @Parameter(description = "Loan ID", example = "1", required = true)
+
+            @Parameter(description = "Loan ID", example = "1")
             @PathVariable Long loanId,
-            @Parameter(description = "Mark every installment from 1 to this number as PAID",
-                    example = "23", required = true)
-            @PathVariable int installmentNumber
-    ) {
-                loanService.markPaidUpTo(loanId, installmentNumber);
-                return ResponseEntity.ok(loanService.getLoan(loanId));
+
+            @Parameter(
+                    description = "All installments from 1 up to this installment are marked PAID",
+                    example = "23")
+            @PathVariable int installmentNumber) {
+
+        loanService.markPaidUpTo(loanId, installmentNumber);
+
+        return ResponseEntity.ok(loanService.getLoan(loanId));
     }
 }

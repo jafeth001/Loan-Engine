@@ -146,5 +146,5 @@ springdoc:
 
 logging:
   level:
-    org.springframework.cache: TRACE
-    org.springframework.data.redis: TRACE
+    org.hibernate.SQL: DEBUG
+    org.hibernate.orm.jdbc.bind: TRACE

@@ -11,8 +11,6 @@ import com.bank.loanengine.messaging.event.LoanCreatedEvent;
 import com.bank.loanengine.messaging.producer.LoanEventProducer;
 import com.bank.loanengine.repository.LoanRepository;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,19 +23,26 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class LoanService {
 
-    private static final Logger log = LoggerFactory.getLogger(LoanService.class);
+    private final LoanRepository loanRepository;
+    private final ScheduleGenerator scheduleGenerator;
+    private final LoanEventProducer eventProducer;
 
-    private final LoanRepository     loanRepository;
-    private final ScheduleGenerator  scheduleGenerator;
-    private final LoanEventProducer  eventProducer;
-
-    // ── Create ───────────────────────────────────────────────────────────────────────────────
+    // ───────────────────────────────────────────────────────────────
+    // Create Loan
+    // ───────────────────────────────────────────────────────────────
 
     @Transactional
     public Loan createLoan(CreateLoanRequest request) {
-        LocalDate startDate = request.startDate() != null ? request.startDate() : LocalDate.now();
+
+        LocalDate startDate =
+                request.startDate() != null
+                        ? request.startDate()
+                        : LocalDate.now();
+
         var emi = LoanMath.calculateEmi(
-                request.principalAmount(), request.annualInterestRate(), request.tenorMonths());
+                request.principalAmount(),
+                request.annualInterestRate(),
+                request.tenorMonths());
 
         Loan loan = Loan.builder()
                 .principalAmount(request.principalAmount())
@@ -48,54 +53,61 @@ public class LoanService {
                 .startDate(startDate)
                 .build();
 
-        List<LoanScheduleInstallment> schedule = scheduleGenerator.generateSchedule(
-                loan, request.principalAmount(), request.annualInterestRate(),
-                emi, request.tenorMonths(), 1, startDate.plusMonths(1));
+        List<LoanScheduleInstallment> schedule =
+                scheduleGenerator.generateSchedule(
+                        loan,
+                        request.principalAmount(),
+                        request.annualInterestRate(),
+                        emi,
+                        request.tenorMonths(),
+                        1,
+                        startDate.plusMonths(1));
+
         schedule.forEach(loan::addInstallment);
 
         Loan saved = loanRepository.save(loan);
 
-        // Publish Kafka event after successful commit (fire-and-forget).
-        eventProducer.publishLoanCreated(new LoanCreatedEvent(
-                UUID.randomUUID().toString(),
-                LocalDateTime.now(),
-                saved.getId(),
-                saved.getPrincipalAmount(),
-                saved.getAnnualInterestRate(),
-                saved.getTenorMonths(),
-                saved.getEmiAmount(),
-                saved.getStartDate()
-        ));
+        eventProducer.publishLoanCreated(
+                new LoanCreatedEvent(
+                        UUID.randomUUID().toString(),
+                        LocalDateTime.now(),
+                        saved.getId(),
+                        saved.getPrincipalAmount(),
+                        saved.getAnnualInterestRate(),
+                        saved.getTenorMonths(),
+                        saved.getEmiAmount(),
+                        saved.getStartDate()));
 
         return saved;
     }
 
-    // ── Read ─────────────────────────────────────────────────────────────────────────────
+    // ───────────────────────────────────────────────────────────────
+    // Get Loan
+    // ───────────────────────────────────────────────────────────────
 
     @Transactional(readOnly = true)
     public LoanResponse getLoan(Long loanId) {
 
-        log.info(">>> ENTERED getLoan()");
-
         Loan loan = loanRepository.findWithScheduleById(loanId)
                 .orElseThrow(() -> new LoanNotFoundException(loanId));
 
-        LoanResponse response = LoanResponse.from(loan);
-
-        log.info(">>> Returning {}", response.getClass());
-
-        return response;
+        return LoanResponse.from(loan);
     }
+
+    // ───────────────────────────────────────────────────────────────
+    // Mark Installments as Paid
+    // ───────────────────────────────────────────────────────────────
 
     @Transactional
     public void markPaidUpTo(Long loanId, int installmentNumber) {
-        log.info("Marking loan {} installments 1..{} as PAID and evicting cache", loanId, installmentNumber);
+
         Loan loan = loanRepository.findWithScheduleById(loanId)
                 .orElseThrow(() -> new LoanNotFoundException(loanId));
+
         loan.getSchedule().stream()
                 .filter(i -> i.getInstallmentNumber() <= installmentNumber)
                 .forEach(i -> i.setStatus(InstallmentStatus.PAID));
+
         loanRepository.save(loan);
-        log.debug("Loan {} marked paid up to {} and saved", loanId, installmentNumber);
     }
 }
