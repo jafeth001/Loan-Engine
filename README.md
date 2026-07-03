@@ -227,7 +227,6 @@ curl http://localhost:8080/api/v1/audits/loans/1 \
 
 | Property | Env var | Default |
 |---|---|---|
-| `app.cache.loans.ttl-minutes` | — | `10` |
 | `JWT_SECRET` | — | Dev default in `application.yml` |
 | `JWT_EXPIRATION_MS` | — | `3600000` |
 | `KAFKA_BOOTSTRAP_SERVERS` | — | `localhost:9094` |
